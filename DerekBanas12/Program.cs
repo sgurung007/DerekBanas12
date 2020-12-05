@@ -7,6 +7,7 @@ namespace DerekBanas12
     {
         static void Main(string[] args)
         {
+            //This is fucking eye patch
             //Generic collections, Generic Methods ,Generic structs, and Delegates
             List<Animal> animalList = new List<Animal>();
 
