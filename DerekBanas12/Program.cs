@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DerekBanas12
 {
     class Program
     {
+        delegate double doubleIt(double val);
         static void Main(string[] args)
         {
             //This is fucking eye patch
@@ -12,19 +14,19 @@ namespace DerekBanas12
             List<Animal> animalList = new List<Animal>();
 
             //add Animal in animalList generic list
-            animalList.Add(new Animal() { Name = "train1"});
+            animalList.Add(new Animal() { Name = "train1" });
             animalList.Add(new Animal() { Name = "boat" });
             animalList.Add(new Animal() { Name = "motorcycyle" });
             animalList.Add(new Animal() { Name = "bicycle" });
 
             //insert animal in 1 index of animal list
-            animalList.Insert(1, new Animal() { Name= "aeroplane" });
+            animalList.Insert(1, new Animal() { Name = "aeroplane" });
 
             //delete the bicycle
             animalList.RemoveAt(animalList.Count - 1);
 
             //printing out the animals
-            foreach(Animal o in animalList)
+            foreach (Animal o in animalList)
             {
                 Console.WriteLine("object is: {0}",
                     o.Name);
@@ -55,6 +57,81 @@ namespace DerekBanas12
 
             sum(10, 5);
             sumsub(10, 5);
+
+            Console.WriteLine("*****************************************");
+            //lambda expression
+            doubleIt dlit = x => x * 2;
+            Console.WriteLine($"5 * 2 is {dlit(5)}");
+
+            List<int> numList = new List<int> { 1, 9, 2, 6, 3 };
+
+            var evenList = numList.Where(a => a % 2 == 0).ToList();
+
+            foreach (int o in evenList)
+            {
+                Console.WriteLine($"{o}");
+            }
+            Console.WriteLine("*****************************************");
+            var rangeList = numList.Where(x => (x > 2) && (x < 9)).ToList();
+
+            foreach (int o in rangeList)
+            {
+                Console.WriteLine($"{o}");
+            }
+
+            Console.WriteLine("*****************************************");
+            //select
+            var oneTo10 = new List<int>();
+            oneTo10.AddRange(Enumerable.Range(1, 10));
+
+            var squares = oneTo10.Select(x => x * x);
+
+            foreach (var o in squares)
+            {
+                Console.WriteLine($"{o}");
+            }
+            Console.WriteLine("*****************************************");
+            //zip
+            var listOne = new List<int>(new int[] { 1, 3, 4 });
+            var listTwo = new List<int>(new int[] { 4, 6, 8 });
+
+            var sumList = listOne.Zip(listTwo, (x, y) => x + y).ToList();
+
+            foreach (var o in sumList)
+            {
+                Console.WriteLine($"zip : {o}");
+            }
+
+            Console.WriteLine("*****************************************");
+            //aggrigate
+
+            var numList5 = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+            Console.WriteLine("sum :{0}",
+                numList5.Aggregate((a, b) => a + b));
+            Console.WriteLine("*****************************************");
+            var numList6 = new List<int> { 1, 2, 3, 4, 5};
+            Console.WriteLine("Ave :{0}",
+                numList6.AsQueryable().Average());
+            Console.WriteLine("*****************************************");
+            Console.WriteLine("All >3:{0}",
+                numList6.All(x => x > 3));
+            Console.WriteLine("Any >3: {0}",
+                numList6.Any(x => x > 3));
+            Console.WriteLine("*****************************************");
+            //Distinct 
+            var numList7 = new List<int>{ 1,2,3,4,5,3};
+            Console.WriteLine("Distinct: {0}",
+                string.Join(",", numList7.Distinct()));
+            Console.WriteLine("*****************************************");
+            var numList8 = new List<int> { 4, 5 };
+            Console.WriteLine("Except: {0}",
+                string.Join(",",
+                numList7.Except(numList8)));
+
+            //Intersect //found in the both list
+
+
         }
 
         public struct Rectangle<T>
